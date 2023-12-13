@@ -1,9 +1,10 @@
-from rich.pretty import pprint
 from collections import Counter
+
+from rich.pretty import pprint
 
 CARDS = "".join(list(reversed("AKQT98765432J")))
 
-with open("camel_cards.txt", "r") as f:
+with open("Day7/camel_cards.txt", "r") as f:
     game = f.read().strip().split("\n")
 
 hands = []

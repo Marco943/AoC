@@ -1,7 +1,8 @@
 import re
+
 from rich.pretty import pprint
 
-with open("almanac.txt", "r") as f:
+with open("Day5/almanac.txt", "r") as f:
     almanac = f.read().strip().replace("\n", " ")
 
 re_seeds = re.compile("seeds\:([0-9 ]*)")

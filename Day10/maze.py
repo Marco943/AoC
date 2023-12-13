@@ -1,6 +1,6 @@
 from maze_instructions import direction_check_map, instructions
 
-maze = list(map(list, open("pipes.txt", "r").read().strip().split("\n")))
+maze = list(map(list, open("Day10/pipes.txt", "r").read().strip().split("\n")))
 maze_height = len(maze)
 maze_width = len(maze[0])
 

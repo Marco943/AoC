@@ -65,7 +65,7 @@ class Universe:
         return self.lengths
 
 
-self = Universe("universe.txt")
+self = Universe("Day11/universe.txt")
 
 # self.find_galaxies()
 # len(self.galaxies)

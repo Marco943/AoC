@@ -1,10 +1,11 @@
 import string
+
 from rich.pretty import pprint
 
 symbols = string.punctuation
 adj = [(dx, dy) for dx in (-1, 0, 1) for dy in (-1, 0, 1) if not (dx == 0 and dy == 0)]
 
-with open("engine.txt", "r") as f:
+with open("Day3/engine.txt", "r") as f:
     engine = f.read().strip().split("\n")
     h = len(engine)
     w = len(engine[0])

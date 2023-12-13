@@ -56,7 +56,7 @@ class Pattern:
         return 0
 
 
-mirrors = open("mirror.txt", "r").read().strip().split("\n\n")
+mirrors = open("Day13/mirror.txt", "r").read().strip().split("\n\n")
 
 old_number = 0
 number = 0

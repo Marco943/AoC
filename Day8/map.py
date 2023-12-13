@@ -1,7 +1,7 @@
 import re
 from math import lcm
 
-with open("map.txt", "r") as f:
+with open("Day8/map.txt", "r") as f:
     map = f.read().strip()
 
 re_instructions = re.compile("([RL]+)\s")

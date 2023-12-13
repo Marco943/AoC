@@ -3,7 +3,7 @@ import re
 re_times = re.compile("Time:([\d ]*)")
 re_distances = re.compile("Distance:([\d ]*)")
 
-with open("races.txt", "r") as f:
+with open("Day6/races.txt", "r") as f:
     races = f.read().strip()
 
     time = int(re_times.findall(races)[0].replace(" ", ""))

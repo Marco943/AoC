@@ -4,7 +4,7 @@ re_card = re.compile("Card\s+(\d+)")
 re_winning = re.compile("Card\s+\d+\: ([\d\s]*)\|")
 re_mine = re.compile("\| ([\d\s]*)")
 
-with open("scratchcards.txt", "r") as f:
+with open("Day4/scratchcards.txt", "r") as f:
     cards = f.read().strip().split("\n")
     cards = {
         int(re_card.findall(card)[0]): {

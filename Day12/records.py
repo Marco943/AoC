@@ -9,7 +9,8 @@ def parse_line(line: str) -> tuple:
 
 
 records = [
-    parse_line(line) for line in open("records.txt", "r").read().strip().split("\n")
+    parse_line(line)
+    for line in open("Day12/records.txt", "r").read().strip().split("\n")
 ]
 
 

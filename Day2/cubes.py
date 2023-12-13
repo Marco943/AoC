@@ -1,6 +1,6 @@
 import re
 
-with open("record.txt", "r") as f:
+with open("Day2/record.txt", "r") as f:
     games = f.readlines()
 
 
