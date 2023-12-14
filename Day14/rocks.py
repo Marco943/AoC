@@ -11,9 +11,6 @@ class Rocks:
         self.w = self.pattern.index("\n")
         self.h = self.pattern.count("\n") + 1
         self.pattern = self.pattern.replace("\n", "")
-        self.rocks_filled = {}
-        self.gravity_works = {}
-        self.results = {}
 
     def col(self, x: int):
         return self.pattern[x :: self.w]
@@ -37,23 +34,16 @@ class Rocks:
         )
 
     def __str__(self):
-        return "\n".join([self.row(i) for i in range(self.h)])
+        return "\n".join([self.row(i) for i in range(self.h)]) + "\n"
 
     def fill_rocks(self, bit: str) -> str:
-        if bit in self.rocks_filled:
-            return self.rocks_filled[bit]
         rocks = "O" * bit.count("O")
         length = len(bit)
         result = rocks.ljust(length, ".")
-        self.rocks_filled[bit] = result
         return result
 
     def gravity(self, row: str) -> str:
-        if row in self.gravity_works.keys():
-            return self.gravity_works[row]
-        result = "#".join(map(self.fill_rocks, row.split("#")))
-        self.gravity_works[row] = result
-        return result
+        return "#".join(map(self.fill_rocks, row.split("#")))
 
     def tilt(self, direction: Literal["n", "s", "e", "w"]):
         if direction == "n":
@@ -69,23 +59,39 @@ class Rocks:
             for y in range(self.h):
                 self.set_row(y, self.gravity(self.row(y)[::-1])[::-1])
 
+    def calc_indexes(self):
+        return tuple(i for i, c in enumerate(self.pattern) if c == "O")
+
     def compute_weight(self):
-        if self.pattern in self.results.keys():
-            print("repetido")
-            return self.results[self.pattern]
-        result = sum([self.row(y).count("O") * (self.h - y) for y in range(self.h)])
-
-        self.results[self.pattern] = result
-        return result
+        return sum([self.row(y).count("O") * (self.h - y) for y in range(self.h)])
 
 
-rocks = Rocks(open("Day14/rocks_test.txt", "r").read().strip())
+rocks = Rocks(open("Day14/rocks.txt", "r").read().strip())
 print(rocks, "\n")
-for cycle in range(1000000000):
-    if cycle % 10000 == 0:
-        print(cycle)
-    for direction in ("n", "s"):
+historico = {}
+cycle = 0
+while True:
+    for direction in ("n", "w", "s", "e"):
         rocks.tilt(direction)
-    # print(rocks, "\n")
+    indexes = rocks.calc_indexes()
+    peso = rocks.compute_weight()
+    print("Cycle", cycle, "Weight", peso)
+    if indexes in historico:
+        break
+    historico[indexes] = peso
+    cycle += 1
 
-print(rocks.compute_weight())
+cycle_end = cycle
+cycle_start = list(historico.keys()).index(indexes)
+cycle_duration = cycle_end - cycle_start
+print("Cycle start:", cycle_start)
+print("Cycle end:", cycle_end)
+print("Cycle duration:", cycle_duration)
+indexes_cycle = [
+    indexes for i, indexes in enumerate(historico.keys()) if i >= cycle_start
+]
+
+print(
+    "Weight at cycle 1000000000:",
+    historico[indexes_cycle[(1000000000 - cycle_start - 1) % cycle_duration]],
+)
