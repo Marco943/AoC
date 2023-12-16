@@ -1,6 +1,4 @@
-import sys
 from dataclasses import dataclass
-from time import sleep
 from typing import Literal, Tuple
 
 
@@ -31,7 +29,10 @@ class Grid:
     def __str__(self):
         return "\n".join([self.row(i) for i in range(self.h)]) + "\n"
 
-    def move(self, beams: list[Beam]):
+    def move(self, beam: Beam):
+        beams = [
+            beam,
+        ]
         self.energized_tiles = set()
         self.hash_tiles = set()
         while len(beams) > 0:
@@ -75,75 +76,10 @@ class Grid:
 
 
 grid = Grid(open("Day16/light.txt", "r").read().strip())
-max_energized = 0
 
+top = [grid.move(Beam((x, 0), "d")) for x in range(grid.w)]
+bottom = [grid.move(Beam((x, grid.h - 1), "u")) for x in range(grid.w)]
+left = [grid.move(Beam((0, y), "r")) for y in range(grid.h)]
+right = [grid.move(Beam((grid.w - 1, y), "l")) for y in range(grid.h)]
 
-# Top
-for x in range(1, grid.w - 1):
-    beams = [
-        Beam((x, 0), "d"),
-    ]
-    max_energized = max(max_energized, grid.move(beams))
-
-# Bottom
-for x in range(1, grid.w - 1):
-    beams = [
-        Beam((x, grid.h - 1), "u"),
-    ]
-    max_energized = max(max_energized, grid.move(beams))
-
-# Left
-for y in range(1, grid.h - 1):
-    beams = [
-        Beam((0, y), "r"),
-    ]
-    max_energized = max(max_energized, grid.move(beams))
-
-# Right
-for y in range(1, grid.h - 1):
-    beams = [
-        Beam((grid.w - 1, y), "l"),
-    ]
-    max_energized = max(max_energized, grid.move(beams))
-
-# Upper-left corner
-beams = [
-    Beam((0, 0), "r"),
-]
-max_energized = max(max_energized, grid.move(beams))
-beams = [
-    Beam((0, 0), "d"),
-]
-max_energized = max(max_energized, grid.move(beams))
-
-# Lower left corner
-beams = [
-    Beam((0, grid.h - 1), "u"),
-]
-max_energized = max(max_energized, grid.move(beams))
-beams = [
-    Beam((0, grid.h - 1), "r"),
-]
-max_energized = max(max_energized, grid.move(beams))
-
-# Upper right corner
-beams = [
-    Beam((grid.w - 1, 0), "d"),
-]
-max_energized = max(max_energized, grid.move(beams))
-beams = [
-    Beam((grid.w - 1, 0), "l"),
-]
-max_energized = max(max_energized, grid.move(beams))
-
-# Lower right corner
-beams = [
-    Beam((grid.w - 1, grid.h - 1), "u"),
-]
-max_energized = max(max_energized, grid.move(beams))
-beams = [
-    Beam((grid.w - 1, grid.h - 1), "l"),
-]
-max_energized = max(max_energized, grid.move(beams))
-
-print(max_energized)
+print(max(top + bottom + right + left))
