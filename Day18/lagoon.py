@@ -3,17 +3,19 @@ import os
 os.chdir("Day18")
 
 
-plan = open("plan.txt", "r").readlines()
+plan = open("plan.txt", "r").read().strip().split("\n")
 
-directions = {"R": (1, 0), "U": (0, -1), "D": (0, 1), "L": (-1, 0)}
+directions = {"0": (1, 0), "3": (0, -1), "1": (0, 1), "2": (-1, 0)}
 r, c = (0, 0)
 
 path = []
 boundary_points = 0
 
+
 for line in plan:
-    dir, meters, _ = line.split(" ")
-    meters = int(meters)
+    color = line[-8:-1]
+    meters = int(color[1:6], base=16)
+    dir = color[-1]
     path.append((c, r))
     dc, dr = directions[dir]
     r += dr * meters
