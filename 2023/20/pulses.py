@@ -37,10 +37,19 @@ def are_all_ff_off(modules: dict[str, dict]):
     return not any(ff_modules_st)
 
 
+rx_con_modules = {
+    name: 0 for name, module in modules.items() if "dd" in module["dests"]
+}
+print(rx_con_modules)
 high_pulses = 0
 low_pulses = 0
-
-for i in range(1000):
+i = 0
+while True:
+    if i == 1000:
+        print("High:", high_pulses, "Low:", low_pulses)
+        print("PARTE 1:", high_pulses * low_pulses)
+    if all(rx_con_modules.values()):
+        break
     modules_handle: deque = deque(["broadcaster"])
     low_pulses += 1
     while True:
@@ -76,8 +85,9 @@ for i in range(1000):
                     modules[dest]["pulse"] = -1
                 else:
                     modules[dest]["pulse"] = 1
+                    if cur in rx_con_modules and rx_con_modules[cur] != 0:
+                        rx_con_modules[cur] = i
+                        print(cur, i)
+
                 modules_handle.append(dest)
-
-
-print("High:", high_pulses, "Low:", low_pulses)
-print("PARTE 1:", high_pulses * low_pulses)
+    i += 1

@@ -7,12 +7,13 @@ import (
 	"slices"
 )
 
-const dia string = "Day21"
+const ano string = "2023"
+const dia string = "21"
 
 var dirs [4][2]int = [4][2]int{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
 
 func main() {
-	os.Chdir(dia)
+	os.Chdir(ano + "/" + dia)
 	grid := *aoc.NewGrid("input.txt")
 	var starting_pos [2]int
 	for y := 0; y < grid.H; y++ {
@@ -25,7 +26,7 @@ func main() {
 	}
 out:
 
-	positions := make([][2]int, 0, 10000000)
+	positions := make([][2]int, 0, grid.H*grid.W)
 	positions = append(positions, starting_pos)
 
 	c := map[int][][2]int{}
