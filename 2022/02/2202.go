@@ -16,6 +16,7 @@ func read_file() [][2]string {
 	if err != nil {
 		panic("erro ao ler o arquivo")
 	}
+	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 
