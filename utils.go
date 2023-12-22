@@ -43,15 +43,15 @@ func NewGrid(path string) *Grid {
 	return &Grid{grid, w, h}
 }
 
-func (g Grid) Get(x int, y int) string {
+func (g *Grid) Get(x int, y int) string {
 	return g.Data[y][x]
 }
 
-func (g Grid) Row(y int) []string {
+func (g *Grid) Row(y int) []string {
 	return g.Data[y]
 }
 
-func (g Grid) Print() {
+func (g *Grid) Print() {
 	fmt.Println()
 	for y := 0; y < g.H; y++ {
 		fmt.Println(g.Row(y))
@@ -59,6 +59,6 @@ func (g Grid) Print() {
 	fmt.Println()
 }
 
-func (g Grid) Set(x int, y int, v string) {
+func (g *Grid) Set(x int, y int, v string) {
 	g.Data[y][x] = v
 }
