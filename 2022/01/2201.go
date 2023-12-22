@@ -1,6 +1,7 @@
 package main
 
 import (
+	aoc "aoc"
 	"bufio"
 	"fmt"
 	"os"
@@ -51,10 +52,7 @@ func main() {
 	var max_calories int
 
 	for _, elf := range elves {
-		calories := 0
-		for _, v := range elf {
-			calories += v
-		}
+		calories := aoc.Sum(&elf)
 		max_calories = max(max_calories, calories)
 		calories_per_elf = append(calories_per_elf, calories)
 	}
@@ -63,9 +61,7 @@ func main() {
 	slices.Sort(calories_per_elf)
 	top_3_calories := calories_per_elf[len(calories_per_elf)-3:]
 
-	var sum_top_3 int
-	for _, v := range top_3_calories {
-		sum_top_3 += v
-	}
+	var sum_top_3 int = aoc.Sum(&top_3_calories)
+
 	fmt.Println("PARTE 2", sum_top_3)
 }

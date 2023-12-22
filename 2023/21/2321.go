@@ -1,7 +1,7 @@
 package main
 
 import (
-	aoc "aoc_2023"
+	aoc "aoc"
 	"fmt"
 	"os"
 	"slices"
