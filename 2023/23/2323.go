@@ -7,12 +7,6 @@ import (
 	"slices"
 )
 
-type Tile struct {
-	i    int16
-	n    uint16
-	seen []int16
-}
-
 func read_file() [][]string {
 	const year, day, path string = "2023", "23", "input.txt"
 	os.Chdir(year + "/" + day)
@@ -42,53 +36,40 @@ func read_file() [][]string {
 	return lines
 }
 
-func main() {
-	lines := read_file()
-	h := int16(len(lines))
-	w := int16(len(lines[0]))
+var best, starting, target, h, w int
+var lines [][]string
+var visited_ar []bool
 
-	var done uint16
-	paths := []Tile{{0*w + 1, 0, []int16{}}}
+func dfs(i int, visited int) {
+	visited_ar[i] = true
 
-	for len(paths) != 0 {
-
-		path := paths[0]
-		paths = paths[1:]
-
-		c := path.i / w
-		r := path.i - w*c
-
-		// fmt.Println(path.i, r, c)
-
-		if r == h-1 && c == w-2 && path.n > done {
-			done = path.n
-			continue
+	if i == target {
+		if visited > best {
+			best = visited
 		}
-
-		if slices.Contains(path.seen, path.i) {
-			continue
-		}
-
-		seen := make([]int16, len(path.seen), cap(path.seen))
-		copy(seen, path.seen)
-		seen = append(seen, path.i)
-
-		for _, dir := range [4][2]int16{{1, 0}, {-1, 0}, {0, 1}, {0, -1}} {
-			ndr, ndc := dir[0], dir[1]
-			nr := (r) + ndr
-			nc := (c) + ndc
-			if (nr < 0) || (nr >= h) || (nc < 0) || (nc >= w) {
+	} else {
+		for _, nd := range [4]int{1, -1, w, -w} {
+			ni := i + nd
+			if (ni < 0) || (ni >= w*h) || (lines[ni/w][ni%w] == "#") || visited_ar[ni] {
 				continue
 			}
-
-			nt := lines[nr][nc]
-			if nt == "#" {
-				continue
-			}
-			paths = append(paths, Tile{nc*w + nr, path.n + 1, seen})
-
+			dfs(ni, visited+1)
 		}
+
 	}
+	visited_ar[i] = false
+}
 
-	fmt.Println("PARTE 2:", done)
+func main() {
+	lines = read_file()
+	h = int(len(lines))
+	w = int(len(lines[0]))
+	visited_ar = make([]bool, h*w)
+
+	starting = slices.Index(lines[0], ".")
+	target = (h-1)*w + slices.Index(lines[h-1], ".")
+
+	dfs(starting, 0)
+
+	fmt.Println("PARTE 2:", best)
 }
