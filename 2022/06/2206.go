@@ -9,10 +9,10 @@ import (
 
 const year, day, input string = "2022", "06", "input"
 
-func checkDistinct(chars []string) bool {
-	for i := 0; i < len(chars); i++ {
-		for j := i + 1; j < len(chars); j++ {
-			if chars[i] == chars[j] {
+func checkDistinct(chars *[]string) bool {
+	for i := 0; i < len(*chars); i++ {
+		for j := i + 1; j < len(*chars); j++ {
+			if (*chars)[i] == (*chars)[j] {
 				return false
 			}
 		}
@@ -37,13 +37,13 @@ func main() {
 		chars[i%4] = text
 		chars2[i%14] = text
 		if (i >= 4) && !found {
-			if checkDistinct(chars) {
+			if checkDistinct(&chars) {
 				fmt.Println("PARTE 1:", i)
 				found = true
 			}
 		}
 		if (i >= 14) && !found2 {
-			if checkDistinct(chars2) {
+			if checkDistinct(&chars2) {
 				fmt.Println("PARTE 2:", i)
 				found2 = true
 			}
