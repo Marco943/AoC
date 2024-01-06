@@ -1,0 +1,13 @@
+(xa1, ya1, za1) = (xa0, ya0, za0) + (vxa, vya, vza) * ta // xa1, ya1, za1, ta
+(xb1, yb1, zb1) = (xb0, yb0, zb0) + (vxb, vyb, vzb) * tb // xb1, yb1, zb1, tb
+(xc1, yc1, zc1) = (xc0, yc0, zc0) + (vxc, vyc, vzc) * tc // xc1, yc1, zc1, tc
+(xd1, yd1, zd1) = (xd0, yd0, zd0) + (vxd, vyd, vzd) * td // xd1, yd1, zd1, td
+(xe1, ye1, ze1) = (xe0, ye0, ze0) + (vxe, vye, vze) * te // xe1, ye1, ze1, te
+
+(xa1, ya1, za1) = (x0, y0, z0) + (vx, vy, vz) * ta // xa1, ya1, za1, ta x0, y0, z0, vx, vy, vze
+(xb1, yb1, zb1) = (x0, y0, z0) + (vx, vy, vz) * tb
+(xc1, yc1, zc1) = (x0, y0, z0) + (vx, vy, vz) * tc
+(xd1, yd1, zd1) = (x0, y0, z0) + (vx, vy, vz) * td
+(xe1, ye1, ze1) = (x0, y0, z0) + (vx, vy, vz) * te
+
+(xa1, ya1, za1) - (vx, vy, vt) * ta = (xb1, yb1, zb1) - (vx, vy, vz) * tb

@@ -6,6 +6,14 @@ import (
 	"os"
 )
 
+func Sum[V int | float32 | float64](s *[]V) V {
+	var resultado V
+	for _, v := range *s {
+		resultado += v
+	}
+	return resultado
+}
+
 type Grid struct {
 	Data [][]string
 	W    int
