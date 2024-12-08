@@ -1,10 +1,4 @@
-YEAR, DAY = 2024, 2
-INPUTS = "test.txt", "input.txt"
-
-
-def part_1(path: str) -> None:
-    print("PART 1")
-
+def part_1(path: str):
     reports: list[list[int]] = []
 
     with open(path, "r") as f:
@@ -34,12 +28,10 @@ def part_1(path: str) -> None:
         if safe:
             safe_count += 1
 
-    print(safe_count)
+    return safe_count
 
 
-def part_2(path: str) -> None:
-    print("PART 2")
-
+def part_2(path: str):
     reports: list[list[int]] = []
 
     with open(path, "r") as f:
@@ -79,10 +71,4 @@ def part_2(path: str) -> None:
         else:
             safe_count += int(is_almost_safe(report))
 
-    print(safe_count)
-
-
-part_1(f"{YEAR}/{DAY:0>2}/test.txt")
-part_1(f"{YEAR}/{DAY:0>2}/input.txt")
-part_2(f"{YEAR}/{DAY:0>2}/test.txt")
-part_2(f"{YEAR}/{DAY:0>2}/input.txt")
+    return safe_count

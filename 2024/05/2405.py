@@ -1,8 +1,4 @@
-YEAR, DAY = 2024, 5
-INPUTS = "test.txt", "input.txt"
-
-
-def part_1(path: str) -> None:
+def part_1(path: str):
     with open(path, "r") as f:
         lines = f.read().strip()
     rules: list[tuple[int, int]] = []
@@ -29,10 +25,10 @@ def part_1(path: str) -> None:
         if is_update_valid(update):
             result += update[len(update) // 2]
 
-    print(result)
+    return result
 
 
-def part_2(path: str) -> None:
+def part_2(path: str):
     with open(path, "r") as f:
         lines = f.read().strip()
     rules: list[tuple[int, int]] = []
@@ -66,10 +62,4 @@ def part_2(path: str) -> None:
                 break
         result += update[len(update) // 2]
 
-    print(result)
-
-
-part_1(f"{YEAR}/{DAY:0>2}/test.txt")
-part_1(f"{YEAR}/{DAY:0>2}/input.txt")
-part_2(f"{YEAR}/{DAY:0>2}/test.txt")
-part_2(f"{YEAR}/{DAY:0>2}/input.txt")
+    return result

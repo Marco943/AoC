@@ -2,11 +2,8 @@ import re
 
 find_section_re = re.compile(r"(mul\((\d{1,3}),(\d{1,3})\))|(do\(\))|(don't\(\))")
 
-YEAR, DAY = 2024, 3
-INPUTS = "test.txt", "input.txt"
 
-
-def part_1(path: str) -> None:
+def part_1(path: str):
     with open(path, "r") as f:
         text = f.read()
 
@@ -17,10 +14,10 @@ def part_1(path: str) -> None:
             continue
         result += int(groups[1]) * int(groups[2])
 
-    print(result)
+    return result
 
 
-def part_2(path: str) -> None:
+def part_2(path: str):
     with open(path, "r") as f:
         text = f.read()
 
@@ -35,10 +32,4 @@ def part_2(path: str) -> None:
         elif do:
             result += int(groups[1]) * int(groups[2])
 
-    print(result)
-
-
-part_1(f"{YEAR}/{DAY:0>2}/test.txt")
-part_1(f"{YEAR}/{DAY:0>2}/input.txt")
-part_2(f"{YEAR}/{DAY:0>2}/test.txt")
-part_2(f"{YEAR}/{DAY:0>2}/input.txt")
+    return result

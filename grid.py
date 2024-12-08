@@ -11,6 +11,8 @@ class Grid:
         self.pattern = self.pattern.replace("\n", "")
 
     def get(self, x: int, y: int):
+        if y < 0 or x < 0 or y >= self.h or x >= self.w:
+            return None
         return self.pattern[y * self.w + x]
 
     def set(self, x: int, y: int, value: str):

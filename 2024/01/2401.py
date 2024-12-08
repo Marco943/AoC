@@ -1,5 +1,4 @@
-def part_1(path: str) -> None:
-    print("PART 1")
+def part_1(path: str):
     list_1: list[int] = []
     list_2: list[int] = []
 
@@ -18,11 +17,10 @@ def part_1(path: str) -> None:
     for i in range(len(list_1)):
         distances.append(abs(list_1[i] - list_2[i]))
 
-    print(sum(distances))
+    return sum(distances)
 
 
-def part_2(path: str) -> None:
-    print("PART 2")
+def part_2(path: str):
     list_1: list[int] = []
     list_2: list[int] = []
 
@@ -41,10 +39,4 @@ def part_2(path: str) -> None:
 
         similarity.append(number * repeated_times)
 
-    print(sum(similarity))
-
-
-part_1("2024/01/test.txt")
-part_1("2024/01/input.txt")
-part_2("2024/01/test.txt")
-part_2("2024/01/input.txt")
+    return sum(similarity)
