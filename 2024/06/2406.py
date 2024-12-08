@@ -33,5 +33,40 @@ def part_1(path: str):
     return count
 
 
+def is_there_loop(grid: Grid, x: int, y: int, dx: int, dy: int) -> bool:
+    visited: set[tuple[int, int, int, int]] = set()
+    while True:
+        cur_cell = grid.get(x, y)
+        if cur_cell is None:
+            break
+        elif cur_cell == "#":
+            x, y = x - dx, y - dy
+            dx, dy = -dy, dx
+            continue
+
+        if (x, y, dx, dy) in visited:
+            return True
+        visited.add((x, y, dx, dy))
+        x, y = x + dx, y + dy
+
+    return False
+
+
 def part_2(path: str):
-    pass
+    grid = Grid(open(path, "r").read().strip())
+
+    sx, sy = find_starting_pos(grid)
+    dx, dy = (0, -1)
+    count = 0
+
+    for bx in range(grid.w):
+        for by in range(grid.h):
+            if sx == bx and sy == by:
+                continue
+            old = grid.get(bx, by)
+            grid.set(bx, by, "#")
+            if is_there_loop(grid, sx, sy, dx, dy):
+                count += 1
+            grid.set(bx, by, old)
+
+    return count
