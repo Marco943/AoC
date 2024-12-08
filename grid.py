@@ -6,6 +6,7 @@ class Grid:
     pattern: str
 
     def __post_init__(self):
+        self.pattern = self.pattern.strip()
         self.w = self.pattern.index("\n")
         self.h = self.pattern.count("\n") + 1
         self.pattern = self.pattern.replace("\n", "")
