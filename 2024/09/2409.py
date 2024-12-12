@@ -27,16 +27,23 @@ def part_1(path: str):
 
 
 def part_2(path: str):
-    disk: list[int] = list(
-        map(lambda b: -1 if b == "." else int(b), list(open(path, "r").read().strip()))
-    )
-    # disk =[ 1,2,3,4,5]
-    id: int = 0
+    disk: list[int] = [int(x) for x in open(path, "r").read().strip()]
+
+    i = 0
     blocks: list[int] = []
-    for i, block in enumerate(disk):
-        if i % 2 != 0:
-            blocks.extend([-1] * block)
+
+    for i in range(len(disk)):
+        if i % 2 == 0:
+            blocks.extend([i // 2] * disk[i])
+        else:
+            blocks.extend([-1] * disk[i])
+
+    for i in range(len(disk) - 1, 0, -1):
+        break
+
+    checksum = 0
+    for i, block in enumerate(blocks):
+        if block == -1:
             continue
-        blocks.extend([id] * block)
-        id += 1
-    return
+        checksum += i * block
+    return checksum
