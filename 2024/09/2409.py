@@ -34,10 +34,10 @@ def part_1(path: str):
         last_block = i
 
         checksum: int = 0
-        for i, block in enumerate(blocks):
-            if block == -1:
-                break
-            checksum += i * block
+    for i, block in enumerate(blocks):
+        if block == -1:
+            break
+        checksum += i * block
     return checksum
 
 
