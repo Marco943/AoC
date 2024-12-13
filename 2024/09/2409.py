@@ -30,38 +30,30 @@ def part_1(path: str):
 
 def part_2(path: str):
     disk: list[int] = [int(x) for x in open(path, "r").read().strip()]
-    print("DISK", disk)
 
     i = 0
     blocks: list[int] = []
     indexes: list[int] = [i * 2 for i in range(len(disk) // 2, 0, -1)]
-    print("INDEXES", indexes)
 
-    while i < len(disk):
-        if disk[i] == 0:
-            i += 1
-            continue
+    for i in range(len(disk)):
         if i % 2 == 0:
-            print(blocks, disk)
-            blocks.extend([i // 2] * disk[i])
+            if disk[i] < 0:
+                blocks.extend([-1] * (-disk[i]))
+            else:
+                blocks.extend([i // 2] * disk[i])
             disk[i] = 0
-            i += 1
         else:
             j = 0
             while j < len(indexes):
                 index = indexes[j]
-                print(blocks, disk)
-                print(disk[i], "free spaces at disk index", i)
                 if disk[i] == 0:
                     break
                 if disk[index] <= disk[i]:
-                    print(index / 2, "fits at size", disk[index])
-                    blocks.extend([index / 2] * disk[index])
+                    blocks.extend([int(index / 2)] * disk[index])
                     disk[i] -= disk[index]
-                    disk[index] = 0
+                    disk[index] = -disk[index]
                     indexes.pop(j)
                 else:
-                    print(index / 2, "doesnt fit")
                     j += 1
             blocks.extend([-1] * disk[i])
 
