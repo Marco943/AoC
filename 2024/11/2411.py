@@ -7,59 +7,50 @@ def n_digitos_par(n: int) -> bool:
 
 
 def part_1(path: str):
-    stones: list[int] = [int(x) for x in open(path, "r").read().strip().split()]
+    stones: dict[int, int] = {}
+    for x in open(path, "r").read().strip().split():
+        stones[int(x)] = stones.get(int(x), 0) + 1
+    blinks = 25
 
-    for blink in range(25):
-        i = 0
-        while i < len(stones):
-            stone = stones[i]
+    for blink in range(blinks):
+        new_stones: dict[int, int] = {}
+        for stone, n in stones.items():
             if stone == 0:
-                stones[i] = 1
-                i += 1
+                new_stones[1] = new_stones.get(1, 0) + n
                 continue
-
             N = math.floor(math.log10(stone)) + 1
             if N % 2 == 0:
-                stones[i], new_stone = divmod(stone, math.pow(10, N / 2))
-                stones.insert(i + 1, new_stone)
-                i += 2
+                new_stone_1, new_stone_2 = divmod(stone, math.pow(10, N / 2))
+                new_stones[new_stone_1] = new_stones.get(new_stone_1, 0) + n
+                new_stones[new_stone_2] = new_stones.get(new_stone_2, 0) + n
                 continue
+            new_stone = stone * 2024
+            new_stones[new_stone] = new_stones.get(new_stone, 0) + n
+        stones = new_stones
 
-            stones[i] = stones[i] * 2024
-            i += 1
-    # print(stones)
-    return len(stones)
+    return sum(stones.values())
 
 
 def part_2(path: str):
-    stones: list[int] = [int(x) for x in open(path, "r").read().strip().split()]
-    stones.insert(0, -1)
+    stones: dict[int, int] = {}
+    for x in open(path, "r").read().strip().split():
+        stones[int(x)] = stones.get(int(x), 0) + 1
     blinks = 75
 
-    @cache
-    def is_even_digits(stone) -> bool:
-        N = math.floor(math.log10(stone)) + 1
-        if N % 2 != 0:
-            return False
-        return divmod(stone, math.pow(10, N / 2))
+    for blink in range(blinks):
+        new_stones: dict[int, int] = {}
+        for stone, n in stones.items():
+            if stone == 0:
+                new_stones[1] = new_stones.get(1, 0) + n
+                continue
+            N = math.floor(math.log10(stone)) + 1
+            if N % 2 == 0:
+                new_stone_1, new_stone_2 = divmod(stone, math.pow(10, N / 2))
+                new_stones[new_stone_1] = new_stones.get(new_stone_1, 0) + n
+                new_stones[new_stone_2] = new_stones.get(new_stone_2, 0) + n
+                continue
+            new_stone = stone * 2024
+            new_stones[new_stone] = new_stones.get(new_stone, 0) + n
+        stones = new_stones
 
-    @cache
-    def handle_stone(stone):
-        if stone < 0:
-            print("blink", -stone)
-            return [stone - 1]
-        if stone == 0:
-            return [1]
-        if stones := is_even_digits(stone):
-            return stones
-        return [stone * 2024]
-
-    while True:
-        stone = stones.pop(0)
-        if stone < -blinks:
-            break
-        stones.extend(handle_stone(stone))
-
-    # print(stones)
-
-    return len(stones)
+    return sum(stones.values())
