@@ -26,20 +26,44 @@ def part_1(path: str):
 def part_2(path: str):
     f = open(path, "r")
     pattern = f.read()
-    while "  " in pattern:
-        pattern = pattern.replace("  ", " ")
-    lines = [line.strip() for line in pattern.splitlines()]
+    lines = pattern.splitlines()
     f.close()
 
-    operations: list[Literal["*", "+"]] = lines[-1].split(" ")
-    totals: list[int] = [1 if i == "*" else 0 for i in operations]
-    numbers: list[list[int]] = [[] for i in operations]
+    length = len(lines[0])
+    height = len(lines)
 
-    for line in lines[:-1]:
-        for i, number in enumerate(line.split(" ")):
-            numbers[i].append(int(number))
+    operations: list[Literal["+", "*"]] = []
+    numbers: list[list[int]] = [[]]
+    i_number = 0
 
-    print(numbers)
-    print(operations)
+    for col in range(length):
+        current_number = 0
+        for row in range(height):
+            char = lines[row][col]
+            if char == " ":
+                continue
+            elif char in ["*", "+"]:
+                operations.append(char)
+                continue
+            current_number = current_number * 10 + int(char)
+        if current_number == 0:
+            i_number += 1
+            numbers.append([])
+        else:
+            numbers[i_number].append(current_number)
 
-    return
+    total = 0
+    for col in range(len(operations)):
+        if operations[col] == "+":
+            col_total = 0
+        else:
+            col_total = 1
+
+        for number in numbers[col]:
+            if operations[col] == "+":
+                col_total += number
+            else:
+                col_total *= number
+        total += col_total
+
+    return total
